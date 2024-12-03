@@ -17,7 +17,7 @@ import (
  *  3. bencode the json marshaled attributes and trails
  */
 
-// SerializableEvent is the the event
+// SerializableEvent is the event
 // containing only fields that will be serialized.
 type SerializableEvent struct {
 	Attributes map[string]*attribute.Attribute `json:"attributes"`
