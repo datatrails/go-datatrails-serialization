@@ -1,41 +1,12 @@
-# template
+# Datatrails Serialization
 
-This repo is a template for all other repos.
+## Overview
 
-Create a new repo using this repo as the template.
+Repository for go modules that serialize data, that will be added to the immutable log.
 
-Additionally update the avid-global-terraform repo by copying the
-entry for 'template':
 
-```
-  "template" = {
-    branch_protection_enabled                      = true
-    repo_name                                      = "template"
-    default_branch                                 = "main"
-    default_branch_required_status_checks_contexts = [
-      "check_pr / Check Commit Message",
-    ]
-    azuredevops_environments = {}
-    azuredevops_pipelines = {}
-  },
-```
+## Merkle Log
 
- to an entry with the same name as the new repo:
-
-```
-  "new-repo" = {
-    branch_protection_enabled                      = true
-    repo_name                                      = "new-repo"
-    default_branch                                 = "main"
-    default_branch_required_status_checks_contexts = [
-      "check_pr / Check Commit Message",
-    ]
-    azuredevops_environments = {}
-    azuredevops_pipelines = {}
-  },
-```
-
- and run:
-
-    task terraform-apply-repos
+For the merkle immutable log, once the data has been serialized, it can be hashed into the `Event Hash`, which when combined with the `MMR Salt` can
+be used to find the corresponding `MMR Entry`
 

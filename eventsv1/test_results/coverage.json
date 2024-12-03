@@ -1,1 +1,0 @@
-{"Packages":[{"Name":"github.com/datatrails/go-datatrails-serialization/eventsv1","Functions":[{"Name":"Foo","File":"/home/jgough/workspace/go-datatrails-event-serializer/eventsv1/test.go","Start":18,"End":50,"Statements":[{"Start":37,"End":48,"Reached":1}]}]}]}
