@@ -3,7 +3,6 @@ package eventsv1
 import (
 	"testing"
 
-	"github.com/datatrails/go-datatrails-common-api-gen/attribute/v2/attribute"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -15,9 +14,9 @@ import (
 // 3. an event with the same attributes and same trails in a different order, serializes to different bytes.
 // 4. an event with the same trails and different attributes serializes to different bytes.
 // 5. an event with the same attributes and different trails, serializes to different bytes.
-func TestSerializeEventConsistency(t *testing.T) {
+func TestSerializeEventFromProtoConsistency(t *testing.T) {
 	type event struct {
-		attributes map[string]*attribute.Attribute
+		attributes map[string]any
 		trails     []string
 	}
 	tests := []struct {
@@ -29,12 +28,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 		{
 			name: "same attributes and trails in same order",
 			event1: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -42,12 +41,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 				},
 			},
 			event2: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -59,12 +58,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 		{
 			name: "same attributes and trails, attributes in different order",
 			event1: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -72,12 +71,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 				},
 			},
 			event2: event{
-				attributes: map[string]*attribute.Attribute{
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
-					"flour":           attribute.NewStringAttribute("500g"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"sugar":           attribute.NewStringAttribute("250g"),
+				attributes: map[string]any{
+					"vanilla extract": "1 tsp",
+					"flour":           "500g",
+					"milk":            "300ml",
+					"eggs":            "2",
+					"sugar":           "250g",
 				},
 				trails: []string{
 					"cake",
@@ -89,12 +88,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 		{
 			name: "same attributes and trails, trails in different order",
 			event1: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -102,12 +101,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 				},
 			},
 			event2: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"viccy sponge",
@@ -119,12 +118,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 		{
 			name: "same trails and different attributes in same order",
 			event1: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -132,13 +131,13 @@ func TestSerializeEventConsistency(t *testing.T) {
 				},
 			},
 			event2: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":               attribute.NewStringAttribute("500g"),
-					"sugar":               attribute.NewStringAttribute("250g"),
-					"eggs":                attribute.NewStringAttribute("2"),
-					"milk":                attribute.NewStringAttribute("300ml"),
-					"vanilla extract":     attribute.NewStringAttribute("1 tsp"),
-					"bicarbonate of soda": attribute.NewStringAttribute("2 tsp"),
+				attributes: map[string]any{
+					"flour":               "500g",
+					"sugar":               "250g",
+					"eggs":                "2",
+					"milk":                "300ml",
+					"vanilla extract":     "1 tsp",
+					"bicarbonate of soda": "2 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -150,12 +149,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 		{
 			name: "same attributes and different trails in same order",
 			event1: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -163,12 +162,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 				},
 			},
 			event2: event{
-				attributes: map[string]*attribute.Attribute{
-					"flour":           attribute.NewStringAttribute("500g"),
-					"sugar":           attribute.NewStringAttribute("250g"),
-					"eggs":            attribute.NewStringAttribute("2"),
-					"milk":            attribute.NewStringAttribute("300ml"),
-					"vanilla extract": attribute.NewStringAttribute("1 tsp"),
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
 				},
 				trails: []string{
 					"cake",
@@ -181,10 +180,20 @@ func TestSerializeEventConsistency(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 
-			serializedEvent1, err := SerializeEvent(test.event1.attributes, test.event1.trails)
+			serializableEvent1 := SerializableEvent{
+				Attributes: test.event1.attributes,
+				Trails:     test.event1.trails,
+			}
+
+			serializableEvent2 := SerializableEvent{
+				Attributes: test.event2.attributes,
+				Trails:     test.event2.trails,
+			}
+
+			serializedEvent1, err := serializableEvent1.Serialize()
 			require.Nil(t, err)
 
-			serializedEvent2, err := SerializeEvent(test.event2.attributes, test.event2.trails)
+			serializedEvent2, err := serializableEvent2.Serialize()
 			require.Nil(t, err)
 
 			if test.sameSerialization {
@@ -197,12 +206,12 @@ func TestSerializeEventConsistency(t *testing.T) {
 	}
 }
 
-// TestSerializeEvent tests:
+// TestSerializableEvent_Serialize tests:
 //
 // 1. an event with all types of attributes [string|list|dict] can be serialized without error.
-func TestSerializeEvent(t *testing.T) {
+func TestSerializableEvent_Serialize(t *testing.T) {
 	type args struct {
-		attributes map[string]*attribute.Attribute
+		attributes map[string]any
 		trails     []string
 	}
 	tests := []struct {
@@ -213,16 +222,16 @@ func TestSerializeEvent(t *testing.T) {
 		{
 			name: "all attribute types no error",
 			args: args{
-				attributes: map[string]*attribute.Attribute{
-					"flour": attribute.NewStringAttribute("500g"),
-					"method": attribute.NewListAttribute([]map[string]string{
+				attributes: map[string]any{
+					"flour": "500g",
+					"method": []map[string]string{
 						{"1": "put flour sugar into mixing bowl"},
 						{"2": "put in eggs and mix"},
 						{"3": "put in milk and mix"},
-					}),
-					"baking time": attribute.NewDictAttribute(map[string]string{
+					},
+					"baking time": map[string]string{
 						"oven time": "30 mins",
-					}),
+					},
 				},
 				trails: []string{
 					"cake",
@@ -235,9 +244,14 @@ func TestSerializeEvent(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 
-			actual, err := SerializeEvent(test.args.attributes, test.args.trails)
-			require.NotNil(t, actual)
+			serializableEvent := SerializableEvent{
+				Attributes: test.args.attributes,
+				Trails:     test.args.trails,
+			}
 
+			actual, err := serializableEvent.Serialize()
+
+			require.NotNil(t, actual)
 			assert.Equal(t, test.err, err)
 
 		})
