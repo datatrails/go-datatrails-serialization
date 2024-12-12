@@ -3,7 +3,6 @@ package eventsv1
 import (
 	"encoding/json"
 
-	"github.com/datatrails/go-datatrails-common-api-gen/attribute/v2/attribute"
 	"github.com/zeebo/bencode"
 )
 
@@ -20,26 +19,35 @@ import (
 // SerializableEvent is the event
 // containing only fields that will be serialized.
 type SerializableEvent struct {
-	Attributes map[string]*attribute.Attribute `json:"attributes"`
-	Trails     []string                        `json:"trails"`
+	Attributes map[string]any `json:"attributes"`
+	Trails     []string       `json:"trails"`
 }
 
-// SerializeEvent serializes a v1 event
-func SerializeEvent(attributes map[string]*attribute.Attribute, trails []string) ([]byte, error) {
+// SerializeEventFromJson serializes a v1 event from datatrails eventv1 api respone
+func SerializeEventFromJson(eventJson []byte) ([]byte, error) {
 
-	// 1. take attributes and trails from v1 event
-	serializableEvent := SerializableEvent{
-		Attributes: attributes,
-		Trails:     trails,
-	}
+	serializableEvent := SerializableEvent{}
 
-	// 2. json marshal the attributes and trails
-	jsonSerializedEvent, err := json.Marshal(&serializableEvent)
+	// json marshal the attributes and trails
+	err := json.Unmarshal(eventJson, &serializableEvent)
 	if err != nil {
 		return nil, err
 	}
 
-	// 3. bencode the json marshaled attributes and trails
+	return serializableEvent.Serialize()
+
+}
+
+// Serialize the event
+func (se *SerializableEvent) Serialize() ([]byte, error) {
+
+	// json marshal the attributes and trails
+	jsonSerializedEvent, err := json.Marshal(&se)
+	if err != nil {
+		return nil, err
+	}
+
+	// bencode the json marshaled attributes and trails
 	//
 	// NOTE: this gives a consistent ordering to the attributes that json doesn't give.
 	bencodeSerializedEvent, err := bencode.EncodeBytes(jsonSerializedEvent)
@@ -48,4 +56,5 @@ func SerializeEvent(attributes map[string]*attribute.Attribute, trails []string)
 	}
 
 	return bencodeSerializedEvent, nil
+
 }
