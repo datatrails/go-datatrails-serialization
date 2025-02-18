@@ -28,7 +28,7 @@ includes:
 
 tasks:
 
-  codeqa:
+  lint:
     desc: |
       format the source and run all the quality checks
       (Does not run unit tests)
@@ -41,7 +41,18 @@ tasks:
     cmds:
       - task: gobuild:build
 
-  test:
+  build:generate:
+    desc: dummy rune
+    cmds:
+      - |
+        echo "Nothing to do here"
+
+  go:modules:
+    desc: update go.mod
+    cmds:
+      - task: codeqa:modules
+
+  test:unit:
     desc: run the tests
     cmds:
       - task: gotest:unit
