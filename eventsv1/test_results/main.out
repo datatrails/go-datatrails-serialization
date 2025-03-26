@@ -1,2 +1,9 @@
 mode: atomic
-github.com/datatrails/go-datatrails-serialization/eventsv1/test.go:3.17,5.2 1 1
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:27.63,33.16 3 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:33.16,35.3 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:37.2,37.38 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:42.58,46.16 2 11
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:46.16,48.3 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:53.2,54.16 2 11
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:54.16,56.3 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:58.2,58.36 1 11
