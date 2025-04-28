@@ -18,12 +18,14 @@ func TestSerializeEventFromProtoConsistency(t *testing.T) {
 	type event struct {
 		attributes map[string]any
 		trails     []string
+		event_type string
 	}
 	tests := []struct {
 		name              string
 		event1            event
 		event2            event
 		sameSerialization bool
+		hasEventType      bool
 	}{
 		{
 			name: "same attributes and trails in same order",
@@ -54,6 +56,39 @@ func TestSerializeEventFromProtoConsistency(t *testing.T) {
 				},
 			},
 			sameSerialization: true,
+		},
+		{
+			name: "same attributes and trails in same order and event type",
+			event1: event{
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
+				},
+				trails: []string{
+					"cake",
+					"viccy sponge",
+				},
+				event_type: "receipt",
+			},
+			event2: event{
+				attributes: map[string]any{
+					"flour":           "500g",
+					"sugar":           "250g",
+					"eggs":            "2",
+					"milk":            "300ml",
+					"vanilla extract": "1 tsp",
+				},
+				trails: []string{
+					"cake",
+					"viccy sponge",
+				},
+				event_type: "receipt",
+			},
+			sameSerialization: true,
+			hasEventType:      true,
 		},
 		{
 			name: "same attributes and trails, attributes in different order",
@@ -183,11 +218,13 @@ func TestSerializeEventFromProtoConsistency(t *testing.T) {
 			serializableEvent1 := SerializableEvent{
 				Attributes: test.event1.attributes,
 				Trails:     test.event1.trails,
+				EventType:  test.event1.event_type,
 			}
 
 			serializableEvent2 := SerializableEvent{
 				Attributes: test.event2.attributes,
 				Trails:     test.event2.trails,
+				EventType:  test.event2.event_type,
 			}
 
 			serializedEvent1, err := serializableEvent1.Serialize()
@@ -196,10 +233,22 @@ func TestSerializeEventFromProtoConsistency(t *testing.T) {
 			serializedEvent2, err := serializableEvent2.Serialize()
 			require.Nil(t, err)
 
+			// check that two events serilaize to the same value
+			// or not depending on test data
 			if test.sameSerialization {
 				assert.Equal(t, serializedEvent1, serializedEvent2)
 			} else {
 				assert.NotEqual(t, serializedEvent1, serializedEvent2)
+			}
+
+			// check that event_type got serialized or ommitted if not present
+			// in the initila data
+			if test.hasEventType {
+				assert.Contains(t, string(serializedEvent1), "event_type")
+				assert.Contains(t, string(serializedEvent2), "event_type")
+			} else {
+				assert.NotContains(t, string(serializedEvent1), "event_type")
+				assert.NotContains(t, string(serializedEvent2), "event_type")
 			}
 
 		})
