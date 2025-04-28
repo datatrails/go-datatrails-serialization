@@ -21,6 +21,7 @@ import (
 type SerializableEvent struct {
 	Attributes map[string]any `json:"attributes"`
 	Trails     []string       `json:"trails"`
+	EventType  string         `json:"event_type,omitempty"`
 }
 
 // SerializeEventFromJson serializes a v1 event from datatrails eventv1 api respone
