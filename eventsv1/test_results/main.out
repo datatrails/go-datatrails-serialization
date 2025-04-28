@@ -1,2 +1,21 @@
-mode: atomic
-github.com/datatrails/go-datatrails-serialization/eventsv1/test.go:3.17,5.2 1 1
+=== RUN   Tesgithub.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:28.63,34.16 3 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:34.16,36.3 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:38.2,38.38 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:43.58,47.16 2 13
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:47.16,49.3 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:54.2,55.16 2 13
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:55.16,57.3 1 0
+github.com/datatrails/go-datatrails-serialization/eventsv1/serializer.go:59.2,59.36 1 13
+S: TestSerializeEventFromProtoConsistency/same_attributes_and_trails_in_same_order (0.00s)
+    --- PASS: TestSerializeEventFromProtoConsistency/same_attributes_and_trails_in_same_order_and_event_type (0.00s)
+    --- PASS: TestSerializeEventFromProtoConsistency/same_attributes_and_trails,_attributes_in_different_order (0.00s)
+    --- PASS: TestSerializeEventFromProtoConsistency/same_attributes_and_trails,_trails_in_different_order (0.00s)
+    --- PASS: TestSerializeEventFromProtoConsistency/same_trails_and_different_attributes_in_same_order (0.00s)
+    --- PASS: TestSerializeEventFromProtoConsistency/same_attributes_and_different_trails_in_same_order (0.00s)
+=== RUN   TestSerializableEvent_Serialize
+=== RUN   TestSerializableEvent_Serialize/all_attribute_types_no_error
+--- PASS: TestSerializableEvent_Serialize (0.00s)
+    --- PASS: TestSerializableEvent_Serialize/all_attribute_types_no_error (0.00s)
+PASS
+coverage: 41.7% of statements
+ok  	github.com/datatrails/go-datatrails-serialization/eventsv1	1.016s	coverage: 41.7% of statements
