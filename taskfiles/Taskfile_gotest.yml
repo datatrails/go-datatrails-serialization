@@ -37,6 +37,6 @@ tasks:
             -v \
             -coverprofile={{.UNITTEST_DIR}}/main.out \
             ./... \
-            2>&1
+            2>&1 
 
-          gocov convert {{.UNITTEST_DIR}}/main.out > {{.UNITTEST_DIR}}/coverage.json
+          go tool cover -html={{.UNITTEST_DIR}}/main.out -o {{.UNITTEST_DIR}}/coverage.html
